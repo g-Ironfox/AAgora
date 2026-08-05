@@ -1,0 +1,49 @@
+services:
+  webui:
+    build: ./webui
+    container_name: webui_aagora
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    restart: unless-stopped
+    volumes:
+      - ./webui:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - rainbow_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_aagora
+    restart: unless-stopped
+    volumes:
+      - ./data/redis:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    networks:
+      - rainbow_net
+
+  mongodb:
+    image: mongo:8
+    container_name: mongo_aagora
+    volumes:
+      - ./data/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --username \"$${MONGO_INITDB_ROOT_USERNAME}\" --password \"$${MONGO_INITDB_ROOT_PASSWORD}\" --authenticationDatabase admin --eval \"db.adminCommand('ping').ok\" | grep -q 1"]
+      interval: 30s
+      start_interval: 2s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      - rainbow_net
+
+networks:
+  rainbow_net:
+    driver: bridge

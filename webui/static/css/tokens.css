@@ -1,0 +1,73 @@
+:root {
+  --surface-0: #f7ecd0;
+  --surface-1: #fff8e8;
+  --surface-2: #fffdf5;
+  --surface-3: #f9e3bb;
+  --surface-4: #efd09b;
+  --border-subtle: #e3c58e;
+  --border-strong: #c99555;
+
+  --accent-primary: #c94e2f;
+  --accent-primary-hover: #ab3d24;
+  --accent-success: #4d8b5b;
+  --accent-danger: #b83b36;
+
+  --text-primary: #4e281d;
+  --text-secondary: #805844;
+  --text-tertiary: #a47758;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 999px;
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.25rem;
+  --spacing-2xl: 1.5rem;
+  
+  --font-sans: "Noto Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-display: "FZKai-Z03", "KaiTi", "STKaiti", serif;
+  
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.625rem;
+  
+  --shadow-sm: 0 2px 5px rgba(103, 55, 25, 0.1);
+  --shadow-md: 0 8px 20px rgba(103, 55, 25, 0.16);
+  --shadow-lg: 0 20px 50px rgba(75, 35, 21, 0.24);
+  
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --surface-0: #251b2a;
+  --surface-1: #322033;
+  --surface-2: #3d2734;
+  --surface-3: #542f39;
+  --surface-4: #704039;
+  --border-subtle: #6d4842;
+  --border-strong: #a5634f;
+
+  --accent-primary: #f2a34a;
+  --accent-primary-hover: #ffc66b;
+  --accent-success: #99c775;
+  --accent-danger: #ff8a72;
+
+  --text-primary: #fff0d2;
+  --text-secondary: #e6c29c;
+  --text-tertiary: #bd927b;
+
+  --shadow-sm: 0 2px 5px rgba(15, 8, 18, 0.36);
+  --shadow-md: 0 8px 20px rgba(15, 8, 18, 0.42);
+  --shadow-lg: 0 20px 50px rgba(10, 4, 12, 0.62);
+}

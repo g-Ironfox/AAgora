@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--surface-0);
+  background-image:
+    linear-gradient(rgba(182, 111, 55, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(182, 111, 55, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100vh;
+}
+
+[data-theme="dark"] body {
+  background-image:
+    radial-gradient(circle at 12% 12%, rgba(244, 158, 69, 0.13) 0 2px, transparent 3px),
+    radial-gradient(circle at 84% 20%, rgba(238, 115, 70, 0.1) 0 2px, transparent 3px),
+    linear-gradient(rgba(255, 213, 133, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 213, 133, 0.035) 1px, transparent 1px);
+  background-size: 88px 88px, 112px 112px, 28px 28px, 28px 28px;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-primary-hover);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }

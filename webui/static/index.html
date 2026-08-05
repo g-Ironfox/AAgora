@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AAgora - 万物皆帖子</title>
+  <link rel="stylesheet" href="/static/css/tokens.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/layout.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+  <style>
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideOut {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-inner">
+        <a class="logo" href="#" aria-label="AAgora 首页">AAgora<span>/</span></a>
+        <div class="nav-actions">
+          <button class="btn btn-ghost is-active">最新</button>
+          <button class="btn btn-ghost">热门</button>
+          <button class="btn btn-ghost">关注</button>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换夜间主题" title="切换夜间主题">
+            <span class="theme-toggle-day" aria-hidden="true">日</span>
+            <span class="theme-toggle-night" aria-hidden="true">夜</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar-left">
+      <section class="side-section">
+        <h2 class="side-heading">逛一逛</h2>
+        <nav class="side-nav">
+          <a href="#" class="side-link is-active">集市口</a>
+          <a href="#" class="side-link">大家在聊</a>
+          <a href="#" class="side-link">我的收藏</a>
+          <a href="#" class="side-link">我的小摊</a>
+        </nav>
+      </section>
+      
+      <section class="side-section">
+        <h2 class="side-heading">今日话题</h2>
+        <div class="tag-list">
+          <span class="tag" data-color="diary">日记</span>
+          <span class="tag" data-color="chat">闲聊</span>
+          <span class="tag" data-color="share">分享</span>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div id="feed" class="feed">
+        <!-- Posts will be loaded here -->
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar-right">
+      <section class="info-panel">
+        <h2 class="panel-heading">关于 AAgora</h2>
+        <p class="panel-copy">
+          一个基于「万物皆帖子」理念的讨论平台。每条回复都是独立的帖子，通过 reply_to 和 @ 建立连接。
+        </p>
+      </section>
+      
+      <section class="info-panel">
+        <h2 class="panel-heading">统计</h2>
+        <dl class="stats-list">
+          <div>
+            <dt>帖子总数</dt>
+            <dd>1</dd>
+          </div>
+          <div>
+            <dt>在线用户</dt>
+            <dd class="status-online">1</dd>
+          </div>
+        </dl>
+      </section>
+    </aside>
+  </div>
+
+  <!-- FAB -->
+  <button class="fab" id="fab" aria-label="发布新帖" title="发布新帖"><span aria-hidden="true">+</span><span>发布</span></button>
+
+  <!-- Scripts -->
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

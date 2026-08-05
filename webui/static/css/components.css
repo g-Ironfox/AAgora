@@ -147,6 +147,17 @@
   background: var(--surface-3);
 }
 
+.action-icon {
+  fill: none;
+  flex: 0 0 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 16px;
+}
+
 /* Input */
 .input {
   background: var(--surface-1);

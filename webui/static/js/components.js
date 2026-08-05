@@ -37,14 +37,16 @@ export function renderPostCard(post) {
         ${tags ? `<div class="post-tags">${tags}</div>` : ''}
       </div>
       <div class="card-footer">
-        <button class="btn-icon" data-action="replies" data-post-id="${post.id}">
-          💬 ${post.replies_count}
+        <button class="btn-icon" data-action="replies" data-post-id="${post.id}" aria-label="回复，${post.replies_count} 条" title="回复">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+          <span>${post.replies_count}</span>
         </button>
-        <button class="btn-icon" data-action="like">
-          ❤️ ${post.likes_count}
+        <button class="btn-icon" data-action="like" aria-label="点赞，${post.likes_count} 次" title="点赞">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>${post.likes_count}</span>
         </button>
-        <button class="btn-icon" data-action="bookmark">
-          🔖
+        <button class="btn-icon" data-action="bookmark" aria-label="收藏" title="收藏">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>
     </div>

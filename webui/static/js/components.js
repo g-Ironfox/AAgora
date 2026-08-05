@@ -18,16 +18,16 @@ export function truncate(text, length = 150) {
   return text.slice(0, length) + '...';
 }
 
-// Render post card
-export function renderPostCard(post) {
-  const tags = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+export function renderPostCard(post, currentUserId = null) {
+  const tags = post.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
+  const ownPost = currentUserId === post.author_id;
   
   return `
     <div class="post-card" data-id="${post.id}">
       <div class="card-header">
-        <img class="avatar" src="${post.author_avatar}" alt="${post.author_name}">
+        <img class="avatar" src="${escapeHtml(post.author_avatar)}" alt="">
         <div class="meta">
-          <span class="username">${post.author_name}</span>
+          <span class="username">${escapeHtml(post.author_name)}</span>
           <span class="timestamp">${formatTime(post.created_at)}</span>
         </div>
       </div>
@@ -41,13 +41,18 @@ export function renderPostCard(post) {
           <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
           <span>${post.replies_count}</span>
         </button>
-        <button class="btn-icon" data-action="like" aria-label="点赞，${post.likes_count} 次" title="点赞">
+        <button class="btn-icon ${post.liked ? 'is-active' : ''}" data-action="like" data-post-id="${post.id}" aria-pressed="${Boolean(post.liked)}" aria-label="点赞，${post.likes_count} 次" title="点赞">
           <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span>${post.likes_count}</span>
         </button>
-        <button class="btn-icon" data-action="bookmark" aria-label="收藏" title="收藏">
+        <button class="btn-icon ${post.bookmarked ? 'is-active' : ''}" data-action="bookmark" data-post-id="${post.id}" aria-pressed="${Boolean(post.bookmarked)}" aria-label="收藏" title="收藏">
           <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
+        ${ownPost ? `
+          <span class="card-footer-spacer"></span>
+          <button class="btn-icon" data-action="edit" data-post-id="${post.id}" aria-label="编辑帖子" title="编辑">编辑</button>
+          <button class="btn-icon" data-action="delete" data-post-id="${post.id}" aria-label="删除帖子" title="删除">删除</button>
+        ` : ''}
       </div>
     </div>
   `;
@@ -56,7 +61,7 @@ export function renderPostCard(post) {
 // Render skeleton loader
 export function renderSkeleton(count = 3) {
   const skeleton = `
-    <div class="post-card">
+    <div class="post-card skeleton-card">
       <div class="card-header">
         <div class="skeleton avatar"></div>
         <div class="meta skeleton-meta">
@@ -80,7 +85,6 @@ export function renderSkeleton(count = 3) {
 export function renderEmptyState(message = '暂无内容') {
   return `
     <div class="empty-state">
-      <div class="empty-state-icon">📭</div>
       <p class="empty-state-text">${message}</p>
     </div>
   `;

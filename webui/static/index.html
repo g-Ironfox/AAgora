@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/static/css/tokens.css">
   <link rel="stylesheet" href="/static/css/base.css">
   <link rel="stylesheet" href="/static/css/layout.css">
-  <link rel="stylesheet" href="/static/css/components.css">
+  <link rel="stylesheet" href="/static/css/components.css?v=20260805-feed-bar-off">
   <style>
     @keyframes slideIn {
       from {
@@ -39,13 +39,14 @@
       <div class="navbar-inner">
         <a class="logo" href="#" aria-label="AAgora 首页">AAgora<span>/</span></a>
         <div class="nav-actions">
-          <button class="btn btn-ghost is-active">最新</button>
-          <button class="btn btn-ghost">热门</button>
-          <button class="btn btn-ghost">关注</button>
+          <button class="btn btn-ghost is-active" data-feed="latest">最新</button>
+          <button class="btn btn-ghost" data-feed="popular">热门</button>
+          <button class="btn btn-ghost" data-feed="following">关注</button>
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换夜间主题" title="切换夜间主题">
             <span class="theme-toggle-day" aria-hidden="true">日</span>
             <span class="theme-toggle-night" aria-hidden="true">夜</span>
           </button>
+          <div class="auth-actions" id="auth-actions" aria-live="polite"></div>
         </div>
       </div>
     </nav>
@@ -55,19 +56,19 @@
       <section class="side-section">
         <h2 class="side-heading">逛一逛</h2>
         <nav class="side-nav">
-          <a href="#" class="side-link is-active">集市口</a>
-          <a href="#" class="side-link">大家在聊</a>
-          <a href="#" class="side-link">我的收藏</a>
-          <a href="#" class="side-link">我的小摊</a>
+          <a href="#" class="side-link is-active" data-view="market">集市口</a>
+          <a href="#" class="side-link" data-view="discussed">大家在聊</a>
+          <a href="#" class="side-link" data-view="bookmarks">我的收藏</a>
+          <a href="#" class="side-link" data-view="mine">我的小摊</a>
         </nav>
       </section>
       
       <section class="side-section">
         <h2 class="side-heading">今日话题</h2>
         <div class="tag-list">
-          <span class="tag" data-color="diary">日记</span>
-          <span class="tag" data-color="chat">闲聊</span>
-          <span class="tag" data-color="share">分享</span>
+          <button class="tag" data-topic="日记">日记</button>
+          <button class="tag" data-topic="闲聊">闲聊</button>
+          <button class="tag" data-topic="分享">分享</button>
         </div>
       </section>
     </aside>
@@ -93,11 +94,11 @@
         <dl class="stats-list">
           <div>
             <dt>帖子总数</dt>
-            <dd>1</dd>
+            <dd id="post-count">-</dd>
           </div>
           <div>
             <dt>在线用户</dt>
-            <dd class="status-online">1</dd>
+            <dd class="status-online" id="user-count">-</dd>
           </div>
         </dl>
       </section>
@@ -108,6 +109,6 @@
   <button class="fab" id="fab" aria-label="发布新帖" title="发布新帖"><span aria-hidden="true">+</span><span>发布</span></button>
 
   <!-- Scripts -->
-  <script type="module" src="/static/js/main.js"></script>
+  <script type="module" src="/static/js/main.js?v=20260805-features"></script>
 </body>
 </html>

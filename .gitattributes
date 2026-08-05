@@ -6,12 +6,14 @@
 # ============================================================
 
 # 排除 Web 前端资源(不计入语言统计)
-webui/static/app.js   linguist-vendored
-webui/sync-test.js    linguist-vendored
+webui/static/js/main.js      linguist-vendored
+webui/static/js/api.js       linguist-vendored
+webui/static/js/components.js linguist-vendored
 
 # 可选:若想让 JS 计入统计但归类为 Python,改用下面这行:
-# webui/static/app.js   linguist-language=Python
-# webui/sync-test.js    linguist-language=Python
+# webui/static/js/main.js      linguist-language=Python
+# webui/static/js/api.js       linguist-language=Python
+# webui/static/js/components.js linguist-language=Python
 
 # 文档类文件不计入统计
 *.md linguist-documentation

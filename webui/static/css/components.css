@@ -269,12 +269,17 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--overlay-backdrop);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: var(--spacing-md);
+  overflow-y: auto;
 }
 
 .modal {
@@ -282,15 +287,18 @@
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
   max-width: 520px;
+  max-height: calc(100dvh - 2 * var(--spacing-md));
   width: 100%;
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-lg);
   animation: modalIn 0.2s ease-out;
+  overflow-y: auto;
 }
 
 .modal-wide {
   max-width: 720px;
   max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
   overflow-y: auto;
 }
 

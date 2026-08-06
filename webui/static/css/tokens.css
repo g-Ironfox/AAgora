@@ -4,6 +4,7 @@
   --surface-2: #fffdf5;
   --surface-3: #f9e3bb;
   --surface-4: #efd09b;
+  --overlay-backdrop: rgba(78, 40, 29, 0.28);
   --border-subtle: #e3c58e;
   --border-strong: #c99555;
 
@@ -55,6 +56,7 @@
   --surface-2: #3d2734;
   --surface-3: #542f39;
   --surface-4: #704039;
+  --overlay-backdrop: rgba(15, 8, 18, 0.46);
   --border-subtle: #6d4842;
   --border-strong: #a5634f;
 

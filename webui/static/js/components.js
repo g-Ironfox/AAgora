@@ -101,6 +101,17 @@ function escapeHtml(text) {
 export function showModal(title, content) {
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
+  const removeModal = modal.remove.bind(modal);
+  // Override remove() so every close path (close button, backdrop click,
+  // form cancel/submit in callers) restores page scrolling; keeps body
+  // scroll locked while at least one modal is still open.
+  const closeModal = () => {
+    removeModal();
+    if (!document.querySelector('.modal-overlay')) {
+      document.body.style.overflow = '';
+    }
+  };
+  modal.remove = closeModal;
   modal.innerHTML = `
     <div class="modal">
       <div class="modal-header">
@@ -114,15 +125,16 @@ export function showModal(title, content) {
   `;
   
   document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
   
   // Close handlers
   modal.querySelector('[data-action="close-modal"]').addEventListener('click', () => {
-    modal.remove();
+    closeModal();
   });
   
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
-      modal.remove();
+      closeModal();
     }
   });
   

@@ -13,7 +13,7 @@ import {
   toggleReaction,
   updatePost
 } from './api.js?v=20260806-presence';
-import { renderPostCard, renderEmptyState, showModal, showToast } from './components.js?v=20260805-features';
+import { renderPostCard, renderEmptyState, showModal, showToast } from './components.js?v=20260806-modal-overlay';
 
 // State
 let currentPage = 1;

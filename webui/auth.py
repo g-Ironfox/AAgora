@@ -11,6 +11,7 @@ from fastapi import APIRouter, Cookie, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, Field, field_validator
 from pymongo import ASCENDING, MongoClient
 from pymongo.errors import DuplicateKeyError
+from redis import Redis
 
 
 SESSION_COOKIE = "aagora_session"
@@ -38,6 +39,11 @@ mongo_client = MongoClient(_mongo_uri())
 database = mongo_client[os.getenv("MONGO_DATABASE", "aagora")]
 users = database["users"]
 sessions = database["sessions"]
+redis_client = Redis(
+    host=os.getenv("REDIS_HOST", "redis"),
+    port=int(os.getenv("REDIS_PORT", "6379")),
+    decode_responses=True,
+)
 
 
 def ensure_auth_indexes() -> None:
@@ -188,7 +194,11 @@ def logout(
     session_token: Annotated[str | None, Cookie(alias=SESSION_COOKIE)] = None,
 ):
     if session_token:
-        sessions.delete_one({"token_hash": _token_hash(session_token)})
+        token_hash = _token_hash(session_token)
+        session = sessions.find_one({"token_hash": token_hash})
+        sessions.delete_one({"token_hash": token_hash})
+        if session:
+            redis_client.zrem("presence:users", session["user_id"])
     response.delete_cookie(SESSION_COOKIE, path="/", samesite="lax")
 
 

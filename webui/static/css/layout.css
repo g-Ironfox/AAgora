@@ -48,8 +48,10 @@
   border-left: 1px solid var(--border-subtle);
   display: flex;
   gap: var(--spacing-xs);
+  justify-content: flex-end;
   margin-left: var(--spacing-xs);
   min-height: 32px;
+  min-width: 190px;
   padding-left: var(--spacing-sm);
 }
 
@@ -174,6 +176,10 @@
 
   .auth-username {
     display: none;
+  }
+
+  .auth-actions {
+    min-width: 108px;
   }
 }
 

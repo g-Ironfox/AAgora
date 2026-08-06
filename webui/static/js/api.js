@@ -112,3 +112,7 @@ export function toggleFollow(userId) {
 export function fetchStats() {
   return request('/stats');
 }
+
+export function sendPresenceHeartbeat() {
+  return request('/presence', { method: 'POST' });
+}

@@ -374,17 +374,7 @@
     var(--surface-2) 100%
   );
   background-size: 200% 100%;
-  animation: pulse 1.5s ease-in-out infinite;
   border-radius: var(--radius-sm);
-}
-
-@keyframes pulse {
-  0%, 100% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 0%;
-  }
 }
 
 .skeleton-text {

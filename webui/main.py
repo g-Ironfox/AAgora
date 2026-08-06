@@ -10,12 +10,22 @@ from pymongo import ASCENDING, DESCENDING, ReturnDocument
 from pymongo.errors import DuplicateKeyError
 import uuid
 
-from auth import database, ensure_auth_indexes, get_current_user, get_optional_user, router as auth_router
+from auth import (
+    database,
+    ensure_auth_indexes,
+    get_current_user,
+    get_optional_user,
+    redis_client,
+    router as auth_router,
+)
 
 
 posts = database["posts"]
 reactions = database["post_reactions"]
 follows = database["follows"]
+
+PRESENCE_KEY = "presence:users"
+PRESENCE_TTL_SECONDS = 120
 
 
 @asynccontextmanager
@@ -293,4 +303,12 @@ def toggle_follow(user_id: str, current_user: Annotated[dict, Depends(get_curren
 
 @app.get("/api/v1/stats")
 def get_stats():
-    return {"posts": posts.count_documents({}), "users": database["users"].count_documents({})}
+    now = datetime.now(timezone.utc).timestamp()
+    cutoff = now - PRESENCE_TTL_SECONDS
+    redis_client.zremrangebyscore(PRESENCE_KEY, "-inf", cutoff)
+    return {"posts": posts.count_documents({}), "users": redis_client.zcount(PRESENCE_KEY, cutoff, "+inf")}
+
+
+@app.post("/api/v1/presence", status_code=status.HTTP_204_NO_CONTENT)
+def heartbeat(current_user: Annotated[dict, Depends(get_current_user)]):
+    redis_client.zadd(PRESENCE_KEY, {current_user["id"]: datetime.now(timezone.utc).timestamp()})

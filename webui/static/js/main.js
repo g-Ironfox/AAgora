@@ -8,11 +8,12 @@ import {
   login,
   logout,
   register,
+  sendPresenceHeartbeat,
   toggleFollow,
   toggleReaction,
   updatePost
-} from './api.js?v=20260805-features';
-import { renderPostCard, renderSkeleton, renderEmptyState, showModal, showToast } from './components.js?v=20260805-features';
+} from './api.js?v=20260806-presence';
+import { renderPostCard, renderEmptyState, showModal, showToast } from './components.js?v=20260805-features';
 
 // State
 let currentPage = 1;
@@ -24,6 +25,9 @@ let currentTag = null;
 let hasMorePosts = false;
 let isLoadingPosts = false;
 let feedRequestId = 0;
+let presenceTimer = null;
+
+const PRESENCE_INTERVAL_MS = 60_000;
 
 // DOM elements
 const feedContainer = document.getElementById('feed');
@@ -79,9 +83,33 @@ async function restoreSession() {
   renderAuthActions();
 }
 
+async function heartbeat() {
+  if (!currentUser || document.visibilityState === 'hidden') return;
+  try {
+    await sendPresenceHeartbeat();
+  } catch (error) {
+    if (error.status !== 401) {
+      console.error('Failed to update presence:', error);
+    }
+  }
+}
+
+function startPresenceHeartbeat() {
+  clearInterval(presenceTimer);
+  if (!currentUser) return;
+  heartbeat();
+  presenceTimer = setInterval(heartbeat, PRESENCE_INTERVAL_MS);
+}
+
+function stopPresenceHeartbeat() {
+  clearInterval(presenceTimer);
+  presenceTimer = null;
+}
+
 async function handleLogout() {
   try {
     await logout();
+    stopPresenceHeartbeat();
     currentUser = null;
     renderAuthActions();
     if (['bookmarks', 'mine', 'following'].includes(currentView)) {
@@ -143,6 +171,7 @@ function showAuthModal(mode) {
         : await login(formData.get('username'), formData.get('password'));
       modal.remove();
       renderAuthActions();
+      startPresenceHeartbeat();
       await resetFeed();
       showToast(isRegister ? '账号创建成功' : '登录成功', 'success');
     } catch (error) {
@@ -170,9 +199,7 @@ async function loadPosts(append = false) {
   const requestId = feedRequestId;
   isLoadingPosts = true;
   try {
-    if (!append && feedContainer.children.length === 0) {
-      feedContainer.innerHTML = renderSkeleton();
-    } else if (!append) {
+    if (!append) {
       feedContainer.classList.add('is-refreshing');
       feedContainer.setAttribute('aria-busy', 'true');
     }
@@ -656,6 +683,7 @@ async function init() {
   const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   applyTheme(savedTheme || preferredTheme);
   await restoreSession();
+  startPresenceHeartbeat();
   bindNavigation();
   loadPosts();
   loadStats();
@@ -675,6 +703,13 @@ async function init() {
     if (!isLoadingPosts && hasMorePosts && window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
       currentPage += 1;
       loadPosts(true);
+    }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      heartbeat();
+      loadStats();
     }
   });
 }

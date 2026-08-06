@@ -130,6 +130,16 @@ def read_root():
     return FileResponse("static/index.html")
 
 
+@app.get("/bookmarks")
+def read_bookmarks():
+    return FileResponse("static/bookmarks.html")
+
+
+@app.get("/mine")
+def read_mine():
+    return FileResponse("static/mine.html")
+
+
 @app.get("/api/v1/posts", response_model=dict)
 def get_posts(
     current_user: Annotated[dict | None, Depends(get_optional_user)],

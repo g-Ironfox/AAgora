@@ -3,45 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AAgora - 万物皆帖子</title>
+  <title>我的小摊 - AAgora</title>
   <link rel="stylesheet" href="/static/css/tokens.css">
   <link rel="stylesheet" href="/static/css/base.css">
   <link rel="stylesheet" href="/static/css/layout.css?v=20260806-stable-auth">
   <link rel="stylesheet" href="/static/css/components.css?v=20260806-modal-overlay-fullscreen">
-  <style>
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    @keyframes slideOut {
-      from {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateX(20px);
-      }
-    }
-  </style>
 </head>
-<body data-view="market">
+<body data-view="mine">
   <div class="app-layout">
-    <!-- Navbar -->
     <nav class="navbar">
       <div class="navbar-inner">
         <a class="logo" href="/" aria-label="AAgora 首页">AAgora<span>/</span></a>
         <div class="nav-actions">
-          <button class="btn btn-ghost is-active" data-feed="latest">最新</button>
-          <button class="btn btn-ghost" data-feed="popular">热门</button>
-          <button class="btn btn-ghost" data-feed="following">关注</button>
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换夜间主题" title="切换夜间主题">
             <span class="theme-toggle-day" aria-hidden="true">日</span>
             <span class="theme-toggle-night" aria-hidden="true">夜</span>
@@ -50,64 +23,42 @@
         </div>
       </div>
     </nav>
-
-    <!-- Left Sidebar -->
     <aside class="sidebar-left">
       <section class="side-section">
         <h2 class="side-heading">逛一逛</h2>
         <nav class="side-nav">
-          <a href="/" class="side-link is-active" data-view="market">集市口</a>
+          <a href="/" class="side-link" data-view="market">集市口</a>
           <a href="/bookmarks" class="side-link" data-view="bookmarks">我的收藏</a>
-          <a href="/mine" class="side-link" data-view="mine">我的小摊</a>
+          <a href="/mine" class="side-link is-active" data-view="mine" aria-current="page">我的小摊</a>
         </nav>
       </section>
-      
       <section class="side-section">
         <h2 class="side-heading">今日话题</h2>
         <div class="tag-list">
-          <button class="tag" data-topic="日记">日记</button>
-          <button class="tag" data-topic="闲聊">闲聊</button>
-          <button class="tag" data-topic="分享">分享</button>
+          <a class="tag" href="/?topic=日记">日记</a>
+          <a class="tag" href="/?topic=闲聊">闲聊</a>
+          <a class="tag" href="/?topic=分享">分享</a>
         </div>
       </section>
     </aside>
-
-    <!-- Main Content -->
     <main class="main-content">
-      <div id="feed" class="feed">
-        <!-- Posts will be loaded here -->
-      </div>
+      <div id="feed" class="feed"></div>
     </main>
-
-    <!-- Right Sidebar -->
     <aside class="sidebar-right">
       <section class="info-panel">
         <h2 class="panel-heading">关于 AAgora</h2>
-        <p class="panel-copy">
-          一个基于「万物皆帖子」理念的讨论平台。每条回复都是独立的帖子，通过 reply_to 和 @ 建立连接。
-        </p>
+        <p class="panel-copy">一个基于「万物皆帖子」理念的讨论平台。每条回复都是独立的帖子，通过 reply_to 和 @ 建立连接。</p>
       </section>
-      
       <section class="info-panel">
         <h2 class="panel-heading">统计</h2>
         <dl class="stats-list">
-          <div>
-            <dt>帖子总数</dt>
-            <dd id="post-count">-</dd>
-          </div>
-          <div>
-            <dt>在线用户</dt>
-            <dd class="status-online" id="user-count">-</dd>
-          </div>
+          <div><dt>帖子总数</dt><dd id="post-count">-</dd></div>
+          <div><dt>在线用户</dt><dd class="status-online" id="user-count">-</dd></div>
         </dl>
       </section>
     </aside>
   </div>
-
-  <!-- FAB -->
   <button class="fab" id="fab" aria-label="发布新帖" title="发布新帖"><span aria-hidden="true">+</span><span>发布</span></button>
-
-  <!-- Scripts -->
   <script type="module" src="/static/js/main.js?v=20260806-separate-pages"></script>
 </body>
 </html>

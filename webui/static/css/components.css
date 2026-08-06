@@ -269,9 +269,6 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  min-height: 100vh;
-  min-height: 100dvh;
   background: var(--overlay-backdrop);
   backdrop-filter: blur(2px);
   display: flex;
